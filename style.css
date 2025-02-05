@@ -38,7 +38,7 @@ body {
 .title {
   flex-wrap: wrap;
   font-size: medium;
-
+  color: white;
 }
 
 a {
@@ -93,4 +93,23 @@ ul {
 
 .form {
   justify-content: left;
+}
+
+h1 {
+  color: white;
+}
+
+div.gallery {
+  float: left;
+}
+
+div.gallery img {
+  width: 100%;
+  height: auto;
+}
+
+div.desc {
+  padding: 15px;
+  text-align: center;
+  color: white;
 }
