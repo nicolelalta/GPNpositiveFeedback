@@ -5,6 +5,100 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
+    <style>
+        /* Container styling */
+        .gallery-container {
+            text-align: center;
+            margin: 20px auto;
+            max-width: 80%;
+            overflow: hidden;
+        }
+
+        /* Create a multi-column grid layout */
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr); /* 3 columns */
+            gap: 20px; /* Space between images */
+            padding: 10px;
+            overflow-y: auto; /* Allows scrolling when content overflows */
+            max-height: 100%; /* Prevents gallery from overflowing vertically */
+        }
+
+        /* Individual gallery items */
+        .gallery-item {
+            text-align: center;
+            cursor: pointer; /* Indicate that the item is clickable */
+        }
+
+        /* Image styling */
+        .gallery img {
+            width: 100%; /* Make images responsive */
+            height: auto;
+            border-radius: 10px; /* Optional: rounded corners */
+            transition: transform 0.3s ease-in-out;
+        }
+
+        .gallery img:hover {
+            transform: scale(1.05); /* Zoom effect on hover */
+        }
+
+        /* Description styling */
+        .desc {
+            font-size: 14px;
+            margin-top: 8px;
+            color: #333;
+        }
+
+        /* Modal container */
+        .modal {
+            display: none; /* Hidden by default */
+            position: fixed;
+            z-index: 1; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.9); /* Black background with transparency */
+            justify-content: center; /* Center the modal horizontally */
+            align-items: center; /* Center the modal vertically */
+        }
+
+        /* Modal content */
+        .modal-content {
+            display: block;
+            max-width: 75%;  /* Ensure the image doesn't overflow */
+            max-height: 75%;  /* Limit the height */
+            margin: auto;
+            margin-top: 6%;  /* Centers the image within the modal */
+            object-fit: contain; /* Ensure the image fits within the container */
+            border-radius: 10px;
+        }
+
+        /* Close button */
+        .close {
+            position: absolute;
+            top: 10px;
+            right: 25px;
+            color: #fff;
+            font-size: 30px;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #bbb;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        /* Make it responsive on smaller screens */
+        @media (max-width: 768px) {
+            .gallery {
+                grid-template-columns: 1fr; /* One column on mobile */
+            }
+        }
+    </style>
 </head>
 <body>
     <!-- Nav bar -->
@@ -19,42 +113,63 @@
           </ul>
       </nav>
 
-      <div class="gallery">
-        <h1>Photo Gallery</h1> <br><br>
-            
-            <div class="gallery">
-                <a target="_blank" href="images/IMG_4004.jpg">
-                   <img src="images/IMG_4004.jpg" alt="Description" width="600" height="400">
-                </a>
+      <div class="gallery-container">
+        <h1>Photo Gallery</h1>
+        <div class="gallery">
+            <div class="gallery-item" onclick="openModal('images/IMG_4004.jpg')">
+                <img src="images/IMG_4004.jpg" alt="Description">
                 <div class="desc">New students welcome event</div>
-              </div>
-              
-              <div class="gallery">
-                <a target="_blank" href="images/IMG_4006.jpg">
-                   <img src="images/IMG_4006.jpg" alt="Description" width="600" height="400">
-                </a>
+            </div>
+    
+            <div class="gallery-item" onclick="openModal('images/IMG_4006.jpg')">
+                <img src="images/IMG_4006.jpg" alt="Description">
                 <div class="desc">New students welcome event</div>
-              </div>
-              
-              <div class="gallery">
-                <a target="_blank" href="images/IMG_4070.jpg">
-                   <img src="images/IMG_4070.jpg" alt="Description" width="600" height="400">
-                </a>
+            </div>
+    
+            <div class="gallery-item" onclick="openModal('images/IMG_4070.jpg')">
+                <img src="images/IMG_4070.jpg" alt="Description">
                 <div class="desc">Positive Feedback: Qualifiers Practice</div>
-              </div>
-              
-              <div class="gallery">
-                <a target="_blank" href="images/IMG_5097.jpg">
-                   <img src="images/IMG_5097.jpg" alt="Description" width="600" height="400">
-                </a>
+            </div>
+    
+            <div class="gallery-item" onclick="openModal('images/IMG_5097.jpg')">
+                <img src="images/IMG_5097.jpg" alt="Description">
                 <div class="desc">Thanksgiving</div>
-              </div>
-
-              <div class="gallery">
-                <a target="_blank" href="images/IMG_5099.jpg">
-                   <img src="images/IMG_5099.jpg" alt="Description" width="600" height="400">
-                </a>
+            </div>
+    
+            <div class="gallery-item" onclick="openModal('images/IMG_5099.jpg')">
+                <img src="images/IMG_5099.jpg" alt="Description">
                 <div class="desc">Thanksgiving</div>
-              </div>
+            </div>
         </div>
+    </div>
+
+    <!-- Modal structure -->
+    <div id="myModal" class="modal">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <img class="modal-content" id="img01">
+    </div>
+
+    <script>
+        // Function to open the modal and display the selected image
+        function openModal(imgSrc) {
+            var modal = document.getElementById("myModal");
+            var modalImg = document.getElementById("img01");
+            modal.style.display = "block";
+            modalImg.src = imgSrc;
+        }
+
+        // Function to close the modal
+        function closeModal() {
+            var modal = document.getElementById("myModal");
+            modal.style.display = "none";
+        }
+
+        // Close the modal if clicked outside of the image
+        window.onclick = function(event) {
+            var modal = document.getElementById("myModal");
+            if (event.target == modal) {
+                modal.style.display = "none";
+            }
+        }
+    </script>
 </body>
