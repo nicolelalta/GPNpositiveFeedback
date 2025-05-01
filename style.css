@@ -152,3 +152,11 @@ div.desc {
   text-align: center;
   color: white;
 } 
+
+th, td {
+  border-style: dotted;
+  border-color: #fff090;
+  color:white;
+  padding: 10px;
+  font-size: small;
+}
